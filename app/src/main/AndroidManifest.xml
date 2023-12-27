@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hk.demo"
+    android:installLocation="internalOnly">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+
+    <uses-configuration android:reqTouchScreen="stylus" />
+    <uses-configuration android:reqTouchScreen="finger" />
+
+    <uses-feature
+        android:name="android.hardware.vibrate"
+        android:required="false" /> <!-- work out -->
+    <permission
+        android:name="com.hk.demo.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.hk.demo.permission.C2D_MESSAGE" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <application
+        android:name=".SmartApp"
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:killAfterRestore="true"
+        android:label="@string/app_name"
+        android:restoreAnyVersion="false"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+
+        //********launch first********
+        <activity
+            android:name=".general.Splash"
+            android:theme="@style/Theme.Design.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".StatsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme" />
+        <activity
+            android:name=".InitUserInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Water_MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MainTheme" />
+
+        <receiver android:name=".recievers.NotifierReceiver" />
+        <receiver android:name=".recievers.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme1" />
+        <activity
+            android:name=".general.Home_page"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan"
+            tools:ignore="Instantiatable">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity> <!-- <activity -->
+
+        <receiver
+            android:name=".notification.NotificationBroadcastReciever"
+            android:exported="true" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d7ea8cdd40371de71f77b4fb95e71d34fbdceba2" />
+
+        <service
+            android:name="com.google.firebase.components.ComponentDiscoveryService"
+            android:exported="false">
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+        </service>
+
+        <receiver
+            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name="com.google.android.gms.measurement.AppMeasurementService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <receiver
+            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+            android:exported="true"
+            tools:replace="android:exported">
+            <intent-filter android:priority="-500">
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <provider
+            android:name="com.google.firebase.provider.FirebaseInitProvider"
+            android:authorities="com.hk.demo.firebaseinitprovider"
+            android:exported="false"
+            android:initOrder="100" /> <!-- pill_reminder -->
+        <activity
+            android:name=".pill_reminder.Pill_MainActivity"
+            android:theme="@style/AppTheme_pill1"></activity>
+        <activity
+            android:name=".pill_reminder.ReminderAddActivity"
+            android:label="@string/title_activity_add_reminder"
+            android:theme="@style/AppTheme_pill2" />
+        <activity
+            android:name=".pill_reminder.ReminderEditActivity"
+            android:label="@string/title_activity_edit_reminder"
+            android:theme="@style/AppTheme_pill2" />
+
+        <receiver android:name=".pill_reminder.AlarmReceiver" />
+        <receiver android:name=".pill_reminder.BootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver> <!-- workout Plan -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_stat_name" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
+        <activity
+            android:name=".fragment.Workout"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".DayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RestDayActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CompletionExcActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ExcDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainExcerciseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name=".alarm.alarmmanagerdemo.NotificationPublisher"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.hk.demo.alarmmanagerdemo.NOTIFY_ACTION" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.REBOOT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receiver.DailyBrodcast"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.REBOOT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".receiver.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true" /> <!-- walk and step -->
+        <activity
+            android:name=".WalkandStep.activities.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme_walk.NoActionBar_walk"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".WalkandStep.activities.TrainingActivity"
+            android:label="@string/activity_title_training"
+            android:parentActivityName=".WalkandStep.activities.TrainingOverviewActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".WalkandStep.activities.TrainingOverviewActivity" />
+        </activity>
+        <activity
+            android:name=".WalkandStep.activities.TrainingOverviewActivity"
+            android:label="@string/activity_title_training"
+            android:parentActivityName=".WalkandStep.activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".WalkandStep.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".WalkandStep.activities.PreferencesActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName=".WalkandStep.activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".WalkandStep.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name=".WalkandStep.activities.MotivationAlertTextsActivity"
+            android:label="@string/activity_title_motivation_alerts"
+            android:parentActivityName=".WalkandStep.activities.PreferencesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".WalkandStep.activities.PreferencesActivity" />
+        </activity>
+        <activity
+            android:name=".WalkandStep.activities.WalkingModesActivity"
+            android:configChanges="orientation|screenSize|keyboard"
+            android:label="@string/activity_title_walking_modes"
+            android:parentActivityName=".WalkandStep.activities.PreferencesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".WalkandStep.activities.PreferencesActivity" />
+        </activity>
+        <activity
+            android:name=".WalkandStep.activities.WalkingModeLearningActivity"
+            android:label="@string/activity_title_walking_modes"
+            android:parentActivityName=".WalkandStep.activities.WalkingModesActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".WalkandStep.activities.WalkingModesActivity" />
+        </activity>
+        <activity
+            android:name=".WalkandStep.activities.DistanceMeasurementActivity"
+            android:label="@string/action_distance_measurement"
+            android:parentActivityName=".WalkandStep.activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".WalkandStep.activities.MainActivity" />
+        </activity>
+        <activity android:name=".WalkandStep.activities.WidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".WalkandStep.receivers.OnBootCompletedBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".WalkandStep.receivers.OnShutdownBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <!-- this is for some htc devices (and others) -->
+                <action android:name="android.intent.action.QUICKBOOT_POWEROFF" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".WalkandStep.receivers.OnPackageReplacedBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".WalkandStep.receivers.StepCountPersistenceReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.hk.demo.WALKING_MODE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".WalkandStep.receivers.WidgetReceiver">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_provider" />
+        </receiver>
+        <receiver android:name=".WalkandStep.receivers.MotivationAlertReceiver" />
+        <receiver android:name=".WalkandStep.receivers.HardwareStepCountReceiver" />
+
+        <service android:name=".WalkandStep.services.HardwareStepCounterService" />
+        <service android:name=".WalkandStep.services.MovementSpeedService" />
+        <service android:name=".WalkandStep.services.AccelerometerStepDetectorService" />
+        <service
+            android:name=".WalkandStep.services.HardwareStepDetectorService"
+            android:stopWithTask="false" />
+    </application>
+
+</manifest>
